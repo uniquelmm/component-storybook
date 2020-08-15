@@ -1,6 +1,8 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import Input from "../src/components/Input";
+
+import { Input } from "./Input";
+
 const stories = storiesOf("Input", module);
 
 stories.addParameters({
@@ -13,4 +15,9 @@ stories.addParameters({
   },
 });
 
-stories.add("input", () => <Input />);
+stories.add("input", () => (
+  <Input
+    placeholder="Email or mobile phone number"
+    label="Email or mobile phone number"
+  />
+));
