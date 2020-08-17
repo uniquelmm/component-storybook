@@ -1,17 +1,17 @@
 import React, { FC, useCallback, useState } from "react";
 import styled, { css } from "styled-components";
 
-import { InputProps, LabelProps } from "../../interfaces";
+import { InputProps } from "../../interfaces";
 
 const InputInterior = styled.div`
-  color: #737373;
+  color: red;
 `;
 
-const InputLabel = styled.label<LabelProps>`
+const InputLabel = styled.label<InputProps>`
   position: absolute;
   z-index: 1;
 
-  top: 2px;
+  top: 4px;
 
   display: ${(props) => (props.show ? "none" : "flex")};
 
@@ -20,9 +20,18 @@ const InputLabel = styled.label<LabelProps>`
   margin-bottom: 6px;
   padding: 0 0.9166666667em;
 
+  transition: all 0.5s ease-out;
+  transform: translateY(3px);
+
   color: #737373;
 
-  font-size: 0.8571428571em;
+  ${(props) => {
+    // eslint-disable-next-line eqeqeq
+    if (props.value == "" && props.type == "email")
+      return css`
+        visibility: hidden;
+      `;
+  }}
 `;
 
 const InputFrame = styled.input`
@@ -45,77 +54,107 @@ const InputFrame = styled.input`
 `;
 
 const HelpText = styled.div`
-  color: #737373;
+  visibility: hidden;
+
+  margin: 0.5714285714em 0 0.2857142857em;
+
+  color: red;
 `;
 
 const InputWrapper = styled.div<InputProps>`
   line-height: 1.3em;
   ${(props) => {
-    return [
-      props.label &&
-        props.placeholder &&
-        css`
-          padding-top: 14px;
-        `,
-    ];
+    return (
+      props.error &&
+      css`
+        ${HelpText} {
+          visibility: visible;
+        }
+      `
+    );
+  }}
+
+  ${(props) => {
+    return (
+      props.value &&
+      css`
+        ${InputFrame} {
+          padding-top: 20px;
+        }
+      `
+    );
   }}
 `;
 
 export const Input: FC<InputProps> = ({
-  // // 错误提示词
+  // 错误提示词
   helpText,
-  // // 错误
-  // error,
+  // 错误
+  error,
   placeholder,
   label,
   value,
-  // type,
-  // // 失去焦点
+  type = "text",
+  // 失去焦点
   onBlur,
-  // // 输入值的变化
+  // 输入值的变化
   onChange,
-  // // 回车输入
+  // 回车
   onPressEnter,
 }) => {
-  let [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(value);
   const [inputLabel, setInputLabel] = useState(true);
 
+  // 输入值的变化
   const handleChange = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      setInputValue = e.target.value;
+      const { value } = e.target;
       // input向下移动
-      if (setInputValue) {
+      if (inputValue) {
         // label出现
+        onChange && onChange(value);
         setInputLabel(false);
+        return setInputValue(value);
       } else {
-        // label消失
-        setInputLabel(true);
+        onChange && onChange(value);
+        return setInputValue(value);
       }
     },
-    [onChange]
+    [onChange, inputValue]
   );
+
+  // 回车
   const handlePressEnter = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 13) {
-        onPressEnter && onPressEnter(e);
+        return onPressEnter && onPressEnter(e);
       }
     },
     [onPressEnter]
   );
+
+  // 失去焦点
+  const handleBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      onBlur && onBlur(e.target.value);
+    },
+    [onBlur]
+  );
   return (
-    <InputWrapper>
+    <InputWrapper error={error}>
       <InputInterior>
         <InputLabel show={inputLabel}>{label}</InputLabel>
         <InputFrame
+          type={type}
           placeholder={placeholder}
-          value={value}
-          // onBlur={onBlur}
+          value={inputValue}
+          onBlur={handleBlur}
           onChange={handleChange}
-          onPressEnter={handlePressEnter}
+          onKeyDown={(e) => onPressEnter && handlePressEnter(e)}
         />
       </InputInterior>
-      <HelpText helpText={helpText} />
+      <HelpText>{helpText}</HelpText>
     </InputWrapper>
   );
 };

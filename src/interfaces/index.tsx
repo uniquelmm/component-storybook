@@ -22,7 +22,5 @@ export interface InputProps {
   label?: string;
   value?: string | number | readonly string[];
   type?: string;
-}
-export interface LabelProps {
   show?: boolean;
 }
