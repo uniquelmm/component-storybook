@@ -202,7 +202,7 @@ export const Button: FC<ButtonProps> = ({
   adapter,
   arrow,
   loading = false,
-  value = "Button",
+  children,
   onClick,
 }) => {
   return (
@@ -214,7 +214,6 @@ export const Button: FC<ButtonProps> = ({
       disabled={disabled}
       adapter={adapter}
       loading={loading}
-      value={value}
       arrow={arrow}
       onClick={onClick}
     >
@@ -241,7 +240,7 @@ export const Button: FC<ButtonProps> = ({
       ) : (
         ""
       )}
-      <div> {value}</div>
+      <div> {children}</div>
     </WrapperButton>
   );
 };

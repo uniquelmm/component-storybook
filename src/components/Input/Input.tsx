@@ -7,7 +7,7 @@ const InputInterior = styled.div`
   color: red;
 `;
 
-const InputLabel = styled.label<InputProps>`
+const InputLabel = styled.div<InputProps>`
   position: absolute;
   z-index: 1;
 
@@ -20,18 +20,10 @@ const InputLabel = styled.label<InputProps>`
   margin-bottom: 6px;
   padding: 0 0.9166666667em;
 
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
   transform: translateY(3px);
 
   color: #737373;
-
-  ${(props) => {
-    // eslint-disable-next-line eqeqeq
-    if (props.value == "" && props.type == "email")
-      return css`
-        visibility: hidden;
-      `;
-  }}
 `;
 
 const InputFrame = styled.input`
@@ -41,16 +33,32 @@ const InputFrame = styled.input`
 
   width: 100%;
 
-  padding: 0.9285714286em 0.7857142857em;
+  padding: 0.8em 0.7857142857em;
+
+  transition: all 0.3s ease-out;
+  transform: translateY(3px);
 
   color: #333;
+
   border: 1px solid #d9d9d9;
+
   border-radius: 5px;
+
   outline-color: #a26b25;
+
   background-clip: padding-box;
 
   font: inherit;
   font-weight: normal;
+  ${(props) => {
+    return [
+      props.placeholder &&
+        props.value &&
+        css`
+          padding: 21px 10px 5px;
+        `,
+    ];
+  }}
 `;
 
 const HelpText = styled.div`
@@ -73,33 +81,17 @@ const InputWrapper = styled.div<InputProps>`
       `
     );
   }}
-
-  ${(props) => {
-    return (
-      props.value &&
-      css`
-        ${InputFrame} {
-          padding-top: 20px;
-        }
-      `
-    );
-  }}
 `;
 
 export const Input: FC<InputProps> = ({
-  // 错误提示词
   helpText,
-  // 错误
   error,
   placeholder,
   label,
   value,
   type = "text",
-  // 失去焦点
   onBlur,
-  // 输入值的变化
   onChange,
-  // 回车
   onPressEnter,
 }) => {
   const [inputValue, setInputValue] = useState(value);
@@ -110,18 +102,28 @@ export const Input: FC<InputProps> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { value } = e.target;
-      // input向下移动
-      if (inputValue) {
-        // label出现
-        onChange && onChange(value);
+      if (value.length > 0) {
+        // console.log("label" + value.length);
         setInputLabel(false);
-        return setInputValue(value);
-      } else {
         onChange && onChange(value);
         return setInputValue(value);
       }
+
+      if (value.length < 1) {
+        // console.log("我没长度了");
+
+        if (type === "email") {
+          // console.log("我是email");
+          setInputLabel(true);
+          onChange && onChange(value);
+          return setInputValue(value);
+        } else {
+          onChange && onChange(value);
+          return setInputValue(" ");
+        }
+      }
     },
-    [onChange, inputValue]
+    [onChange, setInputValue]
   );
 
   // 回车

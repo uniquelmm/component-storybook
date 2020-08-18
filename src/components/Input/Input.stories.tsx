@@ -45,7 +45,6 @@ stories.add("email input", () => (
 stories.add("error input", () => (
   <Input
     placeholder="Email or mobile phone number"
-    label="Email or mobile phone number"
     helpText="Enter a valid email or a mobile phone number"
     error
   />

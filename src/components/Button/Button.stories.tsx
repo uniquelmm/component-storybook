@@ -32,23 +32,41 @@ stories.add("默认", () => (
     background-color="#1EA7FD"
     backgroundhovercolor="#red"
     onClick={handleClick}
-  />
+  >
+    默认
+  </Button>
 ));
 
 stories.add("大小", () => (
   <Container>
-    <Button size="small" onClick={handleClick} />
-    <Button size="middle" onClick={handleClick} />
-    <Button size="large" onClick={handleClick} />
+    <Button size="small" onClick={handleClick}>
+      小
+    </Button>
+    <Button size="middle" onClick={handleClick}>
+      中
+    </Button>
+    <Button size="large" onClick={handleClick}>
+      大
+    </Button>
   </Container>
 ));
 
-stories.add("禁用", () => <Button disabled onClick={handleClick} />);
+stories.add("禁用", () => (
+  <Button disabled onClick={handleClick}>
+    禁用
+  </Button>
+));
 
-stories.add("自适应", () => <Button adapter onClick={handleClick} />);
+stories.add("自适应", () => (
+  <Button adapter onClick={handleClick}>
+    自适应
+  </Button>
+));
 
-stories.add("加载中", () => <Button loading />);
+stories.add("加载中", () => <Button loading>加载</Button>);
 
 stories.add("箭头", () => (
-  <Button arrow loading={false} onClick={handleClick} />
+  <Button arrow loading={false} onClick={handleClick}>
+    箭头
+  </Button>
 ));
