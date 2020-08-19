@@ -23,4 +23,5 @@ export interface InputProps {
   value?: string | number | readonly string[];
   type?: string;
   show?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

@@ -21,20 +21,20 @@ export const DiscountCode: FC<InputProps> = ({ value, onChange, onClick }) => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState(value);
 
-  //   const handleClick = useCallback(
-  //     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //       if (e.target.value) {
-  //         const { value } = e.target;
-  //         if (value) {
-  //           if (value.length > 0) {
-  //             setInputValue(value);
-  //             console.log("我是内容" + inputValue);
-  //           }
-  //         }
-  //       }
-  //     },
-  //     [onClick, setInputValue]
-  //   );
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (e.target.value) {
+        const { value } = e.target;
+        if (value) {
+          if (value.length > 0) {
+            setInputValue(value);
+            console.log("我是内容" + inputValue);
+          }
+        }
+      }
+    },
+    [onClick, setInputValue]
+  );
 
   const handleChange = useCallback(
     (value: string) => {
@@ -60,7 +60,7 @@ export const DiscountCode: FC<InputProps> = ({ value, onChange, onClick }) => {
 
       <ButtonWrapper>
         <Button
-          //   onClick={(e: MouseEvent<HTMLButtonElement>) => handleClick(e)}
+          onClick={(e: MouseEvent<HTMLButtonElement>) => handleClick(e)}
           disabled={disabled}
         >
           Apply
