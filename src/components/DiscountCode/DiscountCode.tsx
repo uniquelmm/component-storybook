@@ -1,5 +1,5 @@
-import React, { FC, MouseEvent, useCallback, useState } from "react";
-import styled, { css } from "styled-components";
+import React, { FC, useCallback, useState } from "react";
+import styled from "styled-components";
 
 import { InputProps } from "../../interfaces";
 import { Button } from "../Button/Button";

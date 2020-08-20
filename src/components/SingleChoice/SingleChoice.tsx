@@ -228,7 +228,6 @@ export const SingleChoice: FC<SingleChoiceProps> = ({ checked }) => {
               name="ExpressRadio"
             />
           </RadioInput>
-
           <ExpressRadioLabel>
             <Express>Express</Express>
             <ExpressPrice>$9.99</ExpressPrice>

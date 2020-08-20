@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import styled, { css } from "styled-components";
 
 import { ButtonProps } from "../../interfaces";
@@ -15,7 +15,7 @@ const useSize = (size: string) => {
     },
     large: {
       height: "50px",
-      width: "60px",
+      width: "80px",
     },
   };
 
@@ -79,29 +79,8 @@ const WrapperButton = styled.button<ButtonProps>`
    ${(props) => {
      if (!props.size) return;
      const sizeInfo = useSize(props.size);
-     let height;
-     let width;
-     switch (props.size) {
-       case "small":
-         height = "30px";
-         width = "60px";
-         break;
-       case "middle":
-         height = "40px";
-         width = "70px";
-         break;
-       case "large":
-         height = "50px";
-         width = "80px";
-     }
 
-     return (
-       props.size &&
-       css`
-         width: ${width};
-         height: ${height};
-       `
-     );
+     return sizeInfo;
    }};
 
   ${(props) => {
@@ -203,8 +182,11 @@ export const Button: FC<ButtonProps> = ({
   arrow,
   loading = false,
   children,
-  onClick,
 }) => {
+  const handleClick = useCallback(() => {
+    alert(2);
+  }, []);
+
   return (
     <WrapperButton
       color={color}
@@ -215,7 +197,7 @@ export const Button: FC<ButtonProps> = ({
       adapter={adapter}
       loading={loading}
       arrow={arrow}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {loading && (
         <LoadingSvg
