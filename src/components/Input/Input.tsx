@@ -78,6 +78,9 @@ const InputWrapper = styled.div<InputProps>`
         ${HelpText} {
           visibility: visible;
         }
+        ${InputFrame} {
+          border-color: red;
+        }
       `
     );
   }}

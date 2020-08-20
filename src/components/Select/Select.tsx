@@ -1,7 +1,5 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC } from "react";
 import styled, { css } from "styled-components";
-
-import { Input } from "../Input/Input";
 export interface SelectProps {
   label?: string;
 }
@@ -36,9 +34,11 @@ const SelectWrapper = styled.div`
   line-height: inherit;
   -webkit-font-smoothing: subpixel-antialiased;
 `;
+
 const InputWrapper = styled.div`
   position: relative;
 `;
+
 const LabelWrapper = styled.label`
   position: absolute;
 
@@ -49,9 +49,7 @@ const LabelWrapper = styled.label`
 
   font-size: 0.8571428571em;
 `;
-const Caret = styled.div`
-  color: #000;
-`;
+
 const SelectOption = styled.select`
   width: 100%;
   padding: 0.9285714286em 0.7857142857em;
@@ -62,7 +60,9 @@ const SelectOption = styled.select`
 
   border-radius: 5px;
   outline-color: #a26b25;
+  appearance: none;
 `;
+
 const Option = styled.option`
   display: block;
 
@@ -76,6 +76,7 @@ const Option = styled.option`
 
   font-weight: normal;
 `;
+
 const CaretWrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -96,10 +97,30 @@ const CaretWrapper = styled.div`
   border-left: 1px rgba(179, 179, 179, 0.5) solid;
 `;
 
+const Svg = styled.svg`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+  margin-left: -2px;
+
+  transform: translate(-50%, -50%);
+  transform-origin: 0 0;
+  vertical-align: middle;
+
+  color: #919191;
+  fill: currentColor;
+`;
+
 const Path = styled.path`
   d: path("M 0 3 h 10 L 5 8");
   fill-rule: nonzero;
 `;
+
 export const Select: FC<SelectProps> = ({ label = "Country/Region" }) => {
   return (
     <>
@@ -113,14 +134,14 @@ export const Select: FC<SelectProps> = ({ label = "Country/Region" }) => {
             <Option>Åland Islands</Option>
             <Option>Albania</Option>
             <Option>Algeria</Option>
-            <Option>Andorra</Option>
             <Option>Angola</Option>
           </SelectOption>
-          <CaretWrapper />
+          <CaretWrapper>
+            <Svg>
+              <Path />
+            </Svg>
+          </CaretWrapper>
         </InputWrapper>
-        <Caret>
-          <Path />
-        </Caret>
       </SelectWrapper>
     </>
   );

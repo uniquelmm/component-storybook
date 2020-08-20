@@ -108,7 +108,7 @@ const StandardWrapper = styled.div`
 `;
 
 const SingleChoiceWrapper = styled.div`
-  color: #fff;
+  color: #545454;
 `;
 
 const StandardRadioLabel = styled.label`
@@ -190,11 +190,7 @@ const ExpressPrice = styled.span`
   font-weight: 500;
 `;
 
-export const SingleChoice: FC<SingleChoiceProps> = ({
-  checked,
-  onClick,
-  onFocus,
-}) => {
+export const SingleChoice: FC<SingleChoiceProps> = ({ checked }) => {
   const [selectedValue, setSelectedValue] = useState("Standard");
 
   const handleClick = useCallback(
